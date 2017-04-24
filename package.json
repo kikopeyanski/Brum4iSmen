@@ -1,0 +1,29 @@
+{
+  "name": "brum4ismen",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "express-session": "^1.15.2",
+    "gridfs": "^1.0.0",
+    "hbs": "~4.0.1",
+    "mongoose": "^4.9.6",
+    "morgan": "~1.8.1",
+    "multer": "^1.3.0",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.0-beta.12",
+    "serve-favicon": "~2.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
