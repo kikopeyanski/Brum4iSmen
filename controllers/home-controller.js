@@ -1,12 +1,11 @@
 'use strict';
 
-module.exports = function ({data}) {
+module.exports = ({data}) => {
     return {
         getHome(req, res){
             data.getHome()
-                .then(response => {
-                    console.log('here');
-                    res.render('index', {name: 'hello'});
+                .then((response) => {
+                    res.render('index', response);
                 })
         }
     }

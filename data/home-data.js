@@ -7,7 +7,7 @@ module.exports = (models) => {
     return {
         getHome(){
             return new Promise((resolve, reject) => {
-                return resolve('Hello');
+               return resolve({name: "Cars!"});
             })
         }
     }
