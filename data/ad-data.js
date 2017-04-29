@@ -8,25 +8,13 @@ module.exports = (models) => {
     let counter = 0;
     return {
         startSearch(){
-            console.log('42');
-            setInterval(function () {
+            return new Promise((resolve, reject) => {
                 requester.get(constants.secretSiteUrl)
-                    .then(response => {
+                    .then((response) => {
                         counter++;
-                        console.log(counter + ' ' + response.body[1]);
+                        return resolve(response.body);
                     })
-                    .catch(function () {
-                        console.log('end' + counter);
-                    })
-            }, 10);
+            })
         }
-        // startSearch(){
-        //     return new Promise((resolve, reject) => {
-        //         requester.get(constants.secretSiteUrl)
-        //             .then((response) => {
-        //                 return resolve(response.body);
-        //             })
-        //     })
-        // }
     }
 };

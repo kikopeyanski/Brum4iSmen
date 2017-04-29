@@ -1,7 +1,8 @@
 'use strict';
 
 const constant = {
-    secretSiteUrl: 'http://mobile.bg'
+    secretSiteUrl: 'http://www.mobile.bg',
+    adLinkString: '<td class="valgtop">'
 };
 
 module.exports = constant;
