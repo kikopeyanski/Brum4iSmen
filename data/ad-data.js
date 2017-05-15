@@ -5,15 +5,11 @@ const requester = require('../utilities/http-requester');
 
 module.exports = (models) => {
     const {Ad} = models;
-    let counter = 0;
+
     return {
-        startSearch(){
+        getPage(index){
             return new Promise((resolve, reject) => {
-                requester.get(constants.secretSiteUrl)
-                    .then((response) => {
-                        counter++;
-                        return resolve(response.body);
-                    })
+                return resolve(requester.get(constants.pagesIndexUrl + index));
             })
         }
     }

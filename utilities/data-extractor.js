@@ -1,17 +1,28 @@
 /*globals*/
 'use strict';
-let links = [];
-const constants = require('utilities/constants');
 
-module.exports = () => {
-    return {
-        extractAdLinks: (content) => {
-            let html = document.createElement('html');
-            // html.
-            // let lastIndex = 0;
-            // let currentIndex = content.indexOf(lastIndex, constants.adLinkString);
-            // while()
-            // links = [1];
-        }
+let cheerio = require('cheerio');
+let $ = null;
+
+
+module.exports = {
+    extractAdLinksFromPage(content){
+        return new Promise((resolve, reject) => {
+            $ = cheerio.load(content);
+
+            let links = $('a.mmm');
+
+            links.each(function () {
+                console.log(this.attribs.href);
+            });
+
+            //Close the window
+            $.html();
+
+
+            //TODO: change
+            resolve(content);
+
+        });
     }
 };

@@ -1,7 +1,7 @@
 /*globals*/
 'use strict';
 const httpRequester = require('request');
-const crypt= require('windows-1251');
+const crypt = require('windows-1251');
 module.exports = {
     get(url) {
         return new Promise((resolve, reject) => {
@@ -10,8 +10,8 @@ module.exports = {
                 encoding: 'binary',
                 method: 'GET'
             }, (err, response, body) => {
-                console.log(crypt.decode(response.body));
-
+                let decoded = crypt.decode(response.body);
+                resolve(decoded);
             });
         });
     }
