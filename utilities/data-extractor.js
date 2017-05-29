@@ -5,24 +5,43 @@ let cheerio = require('cheerio');
 let $ = null;
 
 
-module.exports = {
-    extractAdLinksFromPage(content){
-        return new Promise((resolve, reject) => {
-            $ = cheerio.load(content);
+let dataExtractor = (() => {
+    return {
+        extractAdLinksFromPage(page)
+        {
+            return new Promise((resolve, reject) => {
+                $ = cheerio.load(page);
 
-            let links = $('a.mmm');
+                let links = [];
+                let query = $('a.mmm');
 
-            links.each(function () {
-                console.log(this.attribs.href);
+                query.each(function () {
+                    links.push(this.attribs.href.slice(2));
+                });
+
+                // console.log(links);
+
+                $.html();
+
+                if (!links) {
+                    reject("Empty page!")
+                }
+
+                resolve(links);
             });
+        },
+        extractAdFromAdPage (links) {
+            return new Promise((resolve, reject) => {
+                if (!links) {
+                    reject("Empty list of links!")
+                }
 
-            //Close the window
-            $.html();
+                links.forEach(function (link) {
+                    console.log(link);
+                })
 
-
-            //TODO: change
-            resolve(content);
-
-        });
+            })
+        }
     }
-};
+})();
+module.exports = dataExtractor;

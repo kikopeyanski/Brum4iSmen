@@ -5,14 +5,18 @@ let dataExtractor = require('../utilities/data-extractor');
 module.exports = ({data}) => {
     return {
         startSearch(req, res){
+            //TODO: change page counting to higher number
             for (let i = 0; i <= 0; i += 1) {
                 data.getPage(i)
-                    .then((response) => {
-                        return dataExtractor.extractAdLinksFromPage(response);
+                    .then(links => {
+                        return dataExtractor.extractAdLinksFromPage(links);
                     })
-                    // .then((response) => {
-                    //     res.render('search', {content: response})
-                    // })
+                    .then(response => {
+                        return dataExtractor.extractAdFromAdPage(response);
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                    })
             }
 
         }
