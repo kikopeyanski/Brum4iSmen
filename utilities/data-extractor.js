@@ -43,9 +43,13 @@ let dataExtractor = (() => {
                 let title = table.find('span div').first().css('height', '54px').css('display', 'inline-block');
                 ad.title = title.text();
 
+                let moreInfoTable = table.find('table[width=344]').first();
+                let price = moreInfoTable.find('tr').first().find('td span');
+                ad.price = price.text();
 
 
-                console.log(ad);
+                console.log(price.text());
+                // console.log(ad);
 
             })
         },
