@@ -7,9 +7,9 @@ module.exports = (models) => {
     const {Ad} = models;
 
     return {
-        getPage(index){
+        getAdPage(link){
             return new Promise((resolve, reject) => {
-                return resolve(requester.get(constants.pagesIndexUrl + index));
+                return resolve(requester.get(link));
             })
         }
     }

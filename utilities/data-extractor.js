@@ -1,7 +1,8 @@
 /*globals*/
 'use strict';
 
-let cheerio = require('cheerio');
+const requester = require('../utilities/http-requester');
+const cheerio = require('cheerio');
 let $ = null;
 
 
@@ -19,8 +20,6 @@ let dataExtractor = (() => {
                     links.push(this.attribs.href.slice(2));
                 });
 
-                // console.log(links);
-
                 $.html();
 
                 if (!links) {
@@ -30,17 +29,29 @@ let dataExtractor = (() => {
                 resolve(links);
             });
         },
-        extractAdFromAdPage (links) {
+        extractAdFromPage (page) {
             return new Promise((resolve, reject) => {
-                if (!links) {
-                    reject("Empty list of links!")
+                if (!page) {
+                    reject("Empty page!")
                 }
+                $ = cheerio.load(page);
+                let ad = {};
 
-                links.forEach(function (link) {
-                    console.log(link);
-                })
+                // height:54px; display:inline-block;
+                let form = $('form[name=search]');
+                let table = form.find('table').first();
+                let title = table.find('span div').first().css('height', '54px').css('display', 'inline-block');
+                ad.title = title.text();
+
+
+
+                console.log(ad);
 
             })
+        },
+        parseLinkToHttp(link){
+            let http = 'http://';
+            return http + link.slice(4);
         }
     }
 })();
