@@ -3,53 +3,54 @@
 
 const requester = require('../utilities/http-requester');
 const cheerio = require('cheerio');
+const moment = require('moment');
 let $ = null;
 
 
 let dataExtractor = (() => {
     return {
-        extractAdLinksFromPage(page)
+        extractAdLinksFromPage(data)
         {
             return new Promise((resolve, reject) => {
-                $ = cheerio.load(page);
-
                 let links = [];
-                let query = $('a.mmm');
 
-                query.each(function () {
-                    links.push(this.attribs.href.slice(2));
+                data.adverts.forEach(function (ad) {
+                    if (ad.ida) {
+                        links.push(ad.ida);
+                    }
                 });
-
-                $.html();
-
-                if (!links) {
-                    reject("Empty page!")
-                }
 
                 resolve(links);
             });
         },
-        extractAdFromPage (page) {
+        extractAdFromPage (data) {
             return new Promise((resolve, reject) => {
-                if (!page) {
+                if (!data) {
                     reject("Empty page!")
                 }
-                $ = cheerio.load(page);
+
+                let date = data.pubtime;
+                let publishDate = moment(`${date.pub_day}-${date.pub_month}-${date.pub_year}`
+                    , "DD-MM-YYYY");
+
                 let ad = {};
+                ad.id = data.ida;
+                ad.brand = data.marka;
+                ad.info = data.finfo;
+                ad.model = data.model;
+                ad.extras = data.extri;
+                ad.dealer = data.houseinfo;
+                ad.msg = data.extinfo;
+                ad.pictures = {
+                    path: data.pictspath,
+                    pic: data.picts
+                };
+                ad.phone = data.phone;
+                ad.price = data.price;
+                ad.title = data.title;
 
-                // height:54px; display:inline-block;
-                let form = $('form[name=search]');
-                let table = form.find('table').first();
-                let title = table.find('span div').first().css('height', '54px').css('display', 'inline-block');
-                ad.title = title.text();
 
-                let moreInfoTable = table.find('table[width=344]').first();
-                let price = moreInfoTable.find('tr').first().find('td span');
-                ad.price = price.text();
-
-
-                console.log(price.text());
-                // console.log(ad);
+                resolve(ad);
 
             })
         },

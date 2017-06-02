@@ -6,10 +6,9 @@ const path = require('path');
 
 module.exports = function () {
 
-    let User = require('../models/user-model');
-    let Course = require('../models/ad-model');
+    let Ad = require('../models/ad-model');
 
-    let models = { User, Course };
+    let models = {Ad};
     let data = {};
 
     fs.readdirSync(__dirname)

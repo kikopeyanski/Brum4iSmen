@@ -19,5 +19,24 @@ module.exports = {
                 resolve(decoded);
             });
         });
+    },
+    getJSON(url){
+        return new Promise((resolve, reject) => {
+            httpRequester({
+                uri: url,
+                contentType: 'application/json',
+                method: 'GET'
+            }, (err, response, body) => {
+                if (err) {
+                    reject(response);
+                }
+
+                if (!body && response) {
+                    body = response.body;
+                }
+
+                resolve(JSON.parse(body));
+            })
+        })
     }
 };
